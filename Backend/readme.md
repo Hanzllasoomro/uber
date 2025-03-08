@@ -101,3 +101,63 @@ Logs in an existing user. The endpoint accepts a JSON body, verifies the provide
   "msg": "Invalid credentials"
 }
 ```
+
+# /users/profile Endpoint Documentation
+
+## Description
+Fetches the profile of the logged-in user. The endpoint requires authentication.
+
+## Endpoint
+**GET /users/profile**
+
+## Responses
+
+### Success (200)
+- Returns the user profile object.
+
+**Example:**
+```json
+{
+  "user": { /* user data */ }
+}
+```
+
+### Error (401)
+- Returns an error if the user is not authenticated.
+
+**Example:**
+```json
+{
+  "msg": "Unauthorized"
+}
+```
+
+# /users/logout Endpoint Documentation
+
+## Description
+Logs out the authenticated user by clearing the authentication token. The endpoint requires authentication.
+
+## Endpoint
+**GET /users/logout**
+
+## Responses
+
+### Success (200)
+- Returns a message indicating successful logout.
+
+**Example:**
+```json
+{
+  "message": "Logout successfully"
+}
+```
+
+### Error (401)
+- Returns an error if the user is not authenticated.
+
+**Example:**
+```json
+{
+  "msg": "Unauthorized"
+}
+```
