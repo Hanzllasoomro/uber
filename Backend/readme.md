@@ -161,3 +161,97 @@ Logs out the authenticated user by clearing the authentication token. The endpoi
   "msg": "Unauthorized"
 }
 ```
+
+# /captains/register Endpoint Documentation
+
+## Description
+Registers a new captain with vehicle details. The endpoint accepts a JSON body, hashes the provided password, stores the captain information, and returns a JWT token.
+
+## Endpoint
+**POST /captains/register**
+
+## Request Body
+- **email**: Captain's email (string, valid format)
+- **password**: Captain's password (string, minimum 5 characters)
+- **fullname**: Object containing:
+    - **firstname**: Captain's first name (string, required, minimum 3 characters)
+    - **lastname**: Captain's last name (string, optional)
+- **vehicle**: Object containing:
+    - **color**: Vehicle color (string, minimum 3 characters)
+    - **plate**: Vehicle plate number (string, minimum 3 characters)
+    - **vehicleType**: Type of vehicle (string, must be one of: 'motorcycle', 'car', 'rakshaw')
+    - **capacity**: Vehicle passenger capacity (integer, minimum 1)
+
+**Example:**
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.driver@example.com",
+  "password": "secret123",
+  "vehicle": {
+    "color": "Black",
+    "plate": "ABC-123",
+    "vehicleType": "car",
+    "capacity": 4
+  }
+}
+```
+
+## Responses
+
+### Success (201)
+- Returns the created captain object and a JWT token.
+
+**Example:**
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.driver@example.com",
+    "vehicle": {
+      "color": "Black",
+      "plate": "ABC-123",
+      "vehicleType": "car",
+      "capacity": 4
+    }
+  },
+  "token": "eyJhbGciOi..."
+}
+```
+
+### Error (400)
+- Returns validation errors if any required field is missing or invalid.
+
+**Example:**
+```json
+{
+  "error": [
+    {
+      "msg": "Invalid email",
+      "param": "email",
+      "location": "body"
+    },
+    {
+      "msg": "Invalid vehicle type",
+      "param": "vehicle.vehicleType",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### Error (400) - Duplicate Captain
+- Returns an error if the email is already registered.
+
+**Example:**
+```json
+{
+  "message": "Captain already exist"
+}
+```
