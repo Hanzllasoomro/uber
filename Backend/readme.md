@@ -138,7 +138,7 @@ Fetches the profile of the logged-in user. The endpoint requires authentication.
 Logs out the authenticated user by clearing the authentication token. The endpoint requires authentication.
 
 ## Endpoint
-**GET /users/logout**
+**POST /users/logout**
 
 ## Responses
 
